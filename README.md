@@ -7,9 +7,21 @@ This dll makes it possible to display double-byte characters on Crusader Kings I
  - Only Steam version is supported.
 
 ## How to use
- 1. Goto [Steam workshop mod](https://steamcommunity.com/sharedfiles/filedetails/?id=1515314653).
- 2. Open Install-Mod-link.
- 3. Look at the slide and description. 👍
+- Slide For Japan user
+  [Google Slide](https://docs.google.com/presentation/d/e/2PACX-1vROIc3eu01I-Yi82VlGk-8OLjp9KqHrvya6_5kGR-j--P_m4BKTmPIqTP3IHf3GONpTc4mpQjCJUrzi/pub?start=false&loop=false&delayms=3000)
+
+- Manual install
+  1. Download latest release zipped file and unpack it.
+  2. Put all files into the game directory.
+  3. Subscribe multibyte mods from steam or add mods to paradox user directory in your documents folder.
+  4. Enable mods on game luncher
+  5. Play game. 👍
+
+- Automatic install
+  1. Download [Simple Installer](https://github.com/matanki-saito/SimpleInstaller)
+  2. See [Install Guide (Japanese)](https://paradoxian-japan-mod.com/page-1295/)
+  3. Enable mods on game luncher
+  4. Play game. 👍
 
 ## Find bugs
 If you find a bug, **create a issue** in this repository. 
