@@ -10,9 +10,11 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// moddownload
 		wchar_t myDocumentPath[MAX_PATH];
 		SHGetSpecialFolderPath(NULL, myDocumentPath, CSIDL_PERSONAL, 0);
-
+		
+		#ifndef _DEBUG
 		const path gameDirPath = path{ myDocumentPath } / L"Paradox Interactive" / L"Crusader Kings II";
 		if (!InitAutoUpdate(gameDirPath)) exit(-1);
+		#endif
 
         byte_pattern::start_log(L"ck2jps");
 
@@ -65,7 +67,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
-		success |= NickNameFix::init(&options);
+		//success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(&options);
@@ -74,20 +76,20 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= IME::init(&options);
 
 		//Input
-		success |= Input::init(&options);
+		//success |= Input::init(&options);
 
-		// 不明（忘れた…）
+		// ツールチップとボタンの改行処理
 		success |= Unk3::init(&options);
 		
 		// ...の省略
 		success |= TextOerflow::init(&options);
 
 		// 不明
-		success |= Unk5::init(&options);
+		//success |= Unk5::init(&options);
 
 		// issue33 「XXXに忠誠を誓っている」にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/33
-		success |= Issue33::init(&options);
+		//success |= Issue33::init(&options);
 
 		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/32
@@ -97,7 +99,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= DateFormat::init(&options);
 
 		// ファイル保存
-		success |= FileSave::init(&options);
+		success |= FileName::init(&options);
 
 		if (success == NOERROR && options.test == false) {
 			byte_pattern::temp_instance().debug_output2("DLL [OK]");

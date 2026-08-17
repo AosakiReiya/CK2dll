@@ -3,12 +3,12 @@ This dll makes it possible to display double-byte characters on Crusader Kings I
 
 ## Notice
  - This project is **unofficial**.
+ - Windows is supported and dll only works on Steam.
  - macOS is not supported. I don't have those plans.
- - Only Steam version is supported.
+ - Linux is not supported.
+
 
 ## How to use
-- Slide For Japan user
-  [Google Slide](https://docs.google.com/presentation/d/e/2PACX-1vROIc3eu01I-Yi82VlGk-8OLjp9KqHrvya6_5kGR-j--P_m4BKTmPIqTP3IHf3GONpTc4mpQjCJUrzi/pub?start=false&loop=false&delayms=3000)
 
 - Manual install
   1. Download latest release zipped file and unpack it.
@@ -18,17 +18,25 @@ This dll makes it possible to display double-byte characters on Crusader Kings I
   5. Play game. 👍
 
 - Automatic install
+
   1. Download [Simple Installer](https://github.com/matanki-saito/SimpleInstaller)
   2. See [Install Guide (Japanese)](https://paradoxian-japan-mod.com/page-1295/)
   3. Enable mods on game luncher
   4. Play game. 👍
 
 ## Find bugs
-If you find a bug, **create a issue** in this repository. 
-If possible, please write the issue report in English. However you can also create it in your language (Japanese, Korean, Chinese, Russian etc).
 
-## Autoupdate
-Plugin.dll will be updated automatically. It requires an Internet connection at game run. If you do not need or play offline game, please DELETE "plugins/autoupdate.bat" file.
+If you find a bug, **create a issue** in this repository.
+
+## Spec
+
+#### ERROR_TEST
+
+It is for the alert debug.
+
+### Autoupdate
+
+Plugin.dll and Plugin64.dll will be updated automatically. It requires an Internet connection at game run. If you do not need or play offline game, please DELETE "plugins/autoupdate.bat" file.
  
 ## Licence
 MIT Licence
@@ -40,3 +48,9 @@ This dll was forked by the following project. Thank you so much.
 
 ## plugin.ini
  TBD
+
+## CK2 3.3.5.1 (64-bit Steam re-release) support
+
+This branch (main) tracks the current Kingdom 3.3.5.1 64-bit build.
+- Deploy: put `d3d9.dll` (x64 proxy) into the game directory and `plugins/plugin64.dll` + `plugins/plugin.ini` into `plugins\`.
+- The 64-bit game only imports `Direct3DCreate9` from d3d9.dll, so the proxy is the load vehicle; version.dll is NOT used by this build.
