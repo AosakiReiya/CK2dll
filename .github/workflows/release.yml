@@ -1,0 +1,65 @@
+name: release-3.3.5.1
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v2
+        with:
+          nuget-version: '6.11.1'
+
+      - name: Restore packages
+        run: nuget restore Plugin64/Plugin64.vcxproj -PackagesDirectory packages
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build Plugin64 (x64)
+        run: msbuild Plugin64/Plugin64.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /m /nologo /v:m
+
+      - name: Build d3d9 proxy (x64)
+        run: msbuild d3d9/d3d9.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /m /nologo /v:m
+
+      - name: Stage artifact
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist/plugins | Out-Null
+          Copy-Item Plugin64/x64/Release/Plugin64.dll dist/plugins/plugin64.dll
+          Copy-Item d3d9/x64/Release/d3d9.dll dist/d3d9.dll
+          Copy-Item resource/plugin.ini dist/plugins/plugin.ini
+          Copy-Item README.md dist/README.md
+
+      - name: Zip artifact
+        shell: pwsh
+        run: Compress-Archive -Path dist/* -DestinationPath ck2_3351_x64_mb_fix_${{ github.run_number }}.zip
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ck2_3351_x64_package
+          path: ck2_3351_x64_mb_fix_${{ github.run_number }}.zip
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: CK2 3.3.5.1 x64 multibyte fix - build ${{ github.run_number }}
+          body: |
+            Manual install:
+            1. Unpack the zip into the game directory (`Crusader Kings II`).
+            2. `d3d9.dll` (x64 proxy) + `plugins\plugin64.dll` + `plugins\plugin.ini`.
+            3. Launch via Steam. No autoupdate needed (no `autoupdate64.bat`).
+          files: ck2_3351_x64_mb_fix_${{ github.run_number }}.zip
+          fail_on_unmatched_files: true
