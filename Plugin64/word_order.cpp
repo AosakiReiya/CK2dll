@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "plugin_64.h"
-#include <atlstr.h>
 
 namespace WordOrder {
 	extern "C" {

@@ -82,5 +82,17 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, LPVOID reserved)
     return TRUE;
 }
 
+#ifdef _WIN64
+extern "C" {
+	void* _Direct3DCreate9(unsigned int SDKVersion) {
+		return ((void* (__fastcall*)(unsigned int))d3d9meta.Direct3DCreate9)(SDKVersion);
+	}
+
+	void* _Direct3DCreate9Ex(unsigned int SDKVersion, void** ppEx) {
+		return ((void* (__fastcall*)(unsigned int, void**))d3d9meta.Direct3DCreate9Ex)(SDKVersion, ppEx);
+	}
+}
+#else
 __declspec(naked) void _Direct3DCreate9() { _asm { jmp d3d9meta.Direct3DCreate9 } }
 __declspec(naked) void _Direct3DCreate9Ex() { _asm { jmp d3d9meta.Direct3DCreate9Ex } }
+#endif

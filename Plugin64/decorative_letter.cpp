@@ -195,9 +195,9 @@ namespace DecorativeLetter {
 		switch (options.version) {
 		case v3_3_0:
 			// mov     rbx, rax
-			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00");
-			if (BytePattern::temp_instance().has_size(2, u8"切り出し")) {
-				uintptr_t address = BytePattern::temp_instance().get_second().address();
+			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0 48 8D 55 30 48 8D 4D 70");
+			if (BytePattern::temp_instance().has_size(1, u8"切り出し")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+70h]
 				decorativeLetterProc6ReturnAddress = address + 0x10;
@@ -248,7 +248,7 @@ namespace DecorativeLetter {
 		switch (options.version) {
 		case v3_3_0:
 			// mov     rbx, rax
-			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0");
+			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0 48 8D 55 00 48 8D 4D 48");
 			if (BytePattern::temp_instance().has_size(1, u8"1文字切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
@@ -300,7 +300,7 @@ namespace DecorativeLetter {
 		switch (options.version) {
 		case v3_3_0:
 			// mov     r9d, 1
-			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 10 03 00 00");
+			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 10 03 00 00 48 8D 4D 00");
 			if (BytePattern::temp_instance().has_size(1, u8"1文字切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
