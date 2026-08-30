@@ -28,10 +28,10 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Build Plugin64 (x64)
-        run: msbuild Plugin64/Plugin64.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /m /nologo /v:m
+        run: msbuild Plugin64/Plugin64.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /p:PostBuildEventUseInBuild=false /m /nologo /v:m
 
       - name: Build d3d9 proxy (x64)
-        run: msbuild d3d9/d3d9.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /m /nologo /v:m
+        run: msbuild d3d9/d3d9.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /p:PostBuildEventUseInBuild=false /m /nologo /v:m
 
       - name: Stage artifact
         shell: pwsh
