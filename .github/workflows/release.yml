@@ -3,7 +3,7 @@ name: release-3.3.5.1
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ['v*', '[0-9]*']
   workflow_dispatch:
 
 permissions:
@@ -28,10 +28,10 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Build Plugin64 (x64)
-        run: msbuild Plugin64/Plugin64.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /m /nologo /v:m
+        run: msbuild Plugin64/Plugin64.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /m /nologo /v:m
 
       - name: Build d3d9 proxy (x64)
-        run: msbuild d3d9/d3d9.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /m /nologo /v:m
+        run: msbuild d3d9/d3d9.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /m /nologo /v:m
 
       - name: Stage artifact
         shell: pwsh
@@ -56,7 +56,7 @@ jobs:
           path: ${{ env.ZIP }}
 
       - name: Publish GitHub Release (only on v* tags)
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/') && github.ref_name != '' && !startsWith(github.ref_name, 'Build-') && !startsWith(github.ref_name, 'a0.')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
